@@ -66,21 +66,3 @@ As métricas de monitoramento para o **Prometheus** podem ser acessadas em:
 ```
 http://localhost:5032/metrics
 ```
-
----
-
-## 📦 Estrutura básica do serviço
-
-```
-.
-├── src
-│   ├── controllers
-│   ├── database
-│   ├── middlewares
-│   ├── routes
-│   └── services
-├── docker-compose.yml
-├── Dockerfile
-├── package.json
-└── README.md
-```
