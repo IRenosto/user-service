@@ -1,0 +1,52 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Docker images and start services
+        run: |
+          docker-compose -f docker-compose.ci.yml up -d --build
+          sleep 10 # aguarda banco subir
+
+      - name: Run tests inside container
+        run: |
+          docker exec user-service npm test
+
+      - name: Stop and remove containers
+        run: |
+          docker-compose -f docker-compose.ci.yml down
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-test
+    if: success()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/user-service:latest
