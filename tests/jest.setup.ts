@@ -4,7 +4,7 @@ import { AppDataSource } from '../src/database/data-source';
 import jwt from 'jsonwebtoken';
 import * as authUtils from '../src/shared/middlewares/auth';
 
-const SECRET = process.env.JWT_SECRET || 'segredoQualquer';
+const SECRET = process.env.JWT_SECRET || 'meuSegredo';
 
 beforeAll(async () => {
     await AppDataSource.initialize();
