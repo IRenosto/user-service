@@ -18,12 +18,15 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Install dependencies
         run: npm install
 
       - name: Build Docker images and start services
         run: |
-          docker-compose -f docker-compose.ci.yml up -d --build
+          docker compose -f docker-compose.ci.yml up -d --build
           sleep 10 # aguarda banco subir
 
       - name: Run tests inside container
@@ -32,7 +35,7 @@ jobs:
 
       - name: Stop and remove containers
         run: |
-          docker-compose -f docker-compose.ci.yml down
+          docker compose -f docker-compose.ci.yml down -v
 
   deploy:
     runs-on: ubuntu-latest
@@ -42,6 +45,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
