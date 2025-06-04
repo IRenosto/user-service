@@ -37,7 +37,7 @@ export const testRequest = (method: 'get' | 'post' | 'put' | 'delete' | 'patch',
             {
                 id: 1
             },
-            process.env.JWT_SECRET!,
+            'chaveParaTeste',
             {
                 expiresIn: '1h'
             }
