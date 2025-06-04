@@ -156,6 +156,8 @@ export const getUsuarioAuthByEmail = async (req: Request, res: Response) => {
     try {
         const { email } = req.body;
 
+        console.log(req.body)
+
         if (!email || typeof email !== 'string') {
             return res.status(400).json({ error: 'Parâmetro "email" é obrigatório.' });
         }

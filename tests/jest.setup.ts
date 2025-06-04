@@ -3,6 +3,9 @@ import { server } from '../src/server';
 import { AppDataSource } from '../src/database/data-source';
 import jwt from 'jsonwebtoken';
 import * as authUtils from '../src/shared/middlewares/auth';
+
+const SECRET = process.env.JWT_SECRET || 'segredoQualquer';
+
 beforeAll(async () => {
     await AppDataSource.initialize();
 
@@ -37,7 +40,7 @@ export const testRequest = (method: 'get' | 'post' | 'put' | 'delete' | 'patch',
             {
                 id: 1
             },
-            'chaveParaTeste',
+            SECRET,
             {
                 expiresIn: '1h'
             }
