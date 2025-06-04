@@ -43,6 +43,7 @@ export const ensureAuthenticated: RequestHandler = async (req, res, next) => {
     next();
   } catch (err) {
     console.error('erro jwt verify')
+    console.error(err)
     return res.status(401).json({ error: 'acessToken inválido ou expirado' });
   }
 };
