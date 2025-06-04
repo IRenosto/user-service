@@ -6,6 +6,8 @@ import { IUsuarioPermissoes } from "../interfaces";
 export const decoder = async (req: Request): Promise<IUsuarioPermissoes | undefined> => {
   const authorization = req.headers.authorization;
 
+  console.log(authorization)
+
   if (!authorization) {
     return undefined;
   }
@@ -30,6 +32,7 @@ export const ensureAuthenticated: RequestHandler = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
+    console.error('Sem authHeader')
     return res.status(401).json({ error: 'acessToken não fornecido' });
   }
 
@@ -39,6 +42,7 @@ export const ensureAuthenticated: RequestHandler = async (req, res, next) => {
     jwt.verify(acessToken, process.env.JWT_SECRET as string) as JwtPayload;
     next();
   } catch (err) {
+    console.error('erro jwt verify')
     return res.status(401).json({ error: 'acessToken inválido ou expirado' });
   }
 };
@@ -50,6 +54,7 @@ export const authorization = (
     const usuario = await decoder(req);
 
     if (!usuario) {
+    console.error('Sem usuario')
       return res.status(401).json({ message: "Usuário não autenticado" });
     }
 
@@ -71,6 +76,7 @@ export const alteracaoDeSenha: RequestHandler = async (req, res, next) => {
     const usuario = await decoder(req);
 
     if (!usuario) {
+    console.error('Sem usuario')
       return res.status(401).json({ message: "Usuário não autenticado" });
     }
     
