@@ -17,8 +17,7 @@ export const decoder = async (req: Request): Promise<IUsuarioPermissoes | undefi
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
-
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
     const usuario = await usuariosProvider.getUsuarioPermissoes(decoded.id);
 
     return usuario;

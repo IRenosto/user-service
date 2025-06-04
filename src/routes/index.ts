@@ -235,7 +235,7 @@ router.patch('/usuarios/:id/permissoes', ensureAuthenticated, authorization(['US
 /**
  * @swagger
  * /usuarios/copiar/permissoes:
- *   patch:
+ *   post:
  *     summary: Copia as permissões de autenticação de um usuário para outro
  *     tags: [Usuarios]
  *     requestBody:
@@ -255,7 +255,7 @@ router.patch('/usuarios/:id/permissoes', ensureAuthenticated, authorization(['US
  *       200:
  *         description: Permissões copiadas com sucesso
  */
-router.patch('/usuarios/copiar/permissoes', ensureAuthenticated, authorization(['USUARIO_ESCRITA']), usuariosHandler.copyUsuarioRolesAndPermissionsValidation, usuariosHandler.copyUsuarioRolesAndPermissions);
+router.post('/usuarios/copiar/permissoes', ensureAuthenticated, authorization(['USUARIO_ESCRITA']), usuariosHandler.copyUsuarioRolesAndPermissionsValidation, usuariosHandler.copyUsuarioRolesAndPermissions);
 
 /**
  * @swagger

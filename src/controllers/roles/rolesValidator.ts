@@ -18,10 +18,10 @@ export const createRoleValidation = validation({
 
   export const getAllRolesValidation = validation({
     query: z.object({
-      page: z.number().int().min(1, 'page deve ser maior que 0').optional(),
-      limit: z.number().int().min(1, 'limit deve ser maior que 0').optional(),
-      filter: z.string().optional(),
-    }),
+    page: z.coerce.number().default(1),
+    limit: z.coerce.number().default(10),
+    filter: z.string().optional(),
+  }),
   });
 
   export const getRoleByIdValidation = validation({

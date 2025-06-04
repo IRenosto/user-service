@@ -2,11 +2,11 @@ import { z } from 'zod';
 import { validation } from '../../shared/middlewares';
 
 export const getAllPermissoesValidation = validation({
-    query: z.object({
-      page: z.number().int().min(1, 'page deve ser maior que 0').optional(),
-      limit: z.number().int().min(1, 'limit deve ser maior que 0').optional(),
-      filter: z.string().optional(),
-    }),
+     query: z.object({
+    page: z.coerce.number().default(1),
+    limit: z.coerce.number().default(10),
+    filter: z.string().optional(),
+  }),
   });
 
   export const getPermissaoByIdValidation = validation({

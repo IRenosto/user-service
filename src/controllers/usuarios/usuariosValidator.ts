@@ -47,7 +47,7 @@ export const updateUsuarioValidation = validation({
     sobrenome: z.string().min(3, 'Sobrenome deve ter no mínimo 3 caracteres').optional(),
     senha: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres').optional(),
     email: z.string().email('Email inválido').min(5, 'Email deve ter no mínimo 5 caracteres').optional(),
-    ativo: z.boolean(),
+    ativo: z.boolean().optional(),
     usuarioReferenciaId: z.number().min(1).optional(),
   }),
 });
@@ -77,8 +77,8 @@ export const updateUsuarioRolesAndPermissionsValidation = validation({
 
 export const copyUsuarioRolesAndPermissionsValidation = validation({
   body: z.object({
-    usuarioId: z.number().min(1),
-    usuarioReferenciaId: z.number().min(1),
+    usuarioId: z.coerce.number().min(1),
+    usuarioReferenciaId: z.coerce.number().min(1),
   }),
 });
 

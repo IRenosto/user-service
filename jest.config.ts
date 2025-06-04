@@ -5,18 +5,17 @@ const config: Config = {
     collectCoverage: true,
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
-    coverageReporters: [
-        'json'
-    ],
-    setupFilesAfterEnv: [
-        './tests/jest.setup.ts'
-    ],
+    coverageReporters: ['json', 'text-summary'],
+    setupFilesAfterEnv: ['./tests/jest.setup.ts'],
     testMatch: [
-        '<rootDir>/tests/**/*.test.ts'
+        '<rootDir>/tests/**/*.test.ts',
+        '<rootDir>/tests/**/*.spec.ts'
     ],
     transform: {
         '^.+\\.(ts|tsx)$': 'ts-jest'
-    }
+    },
+    moduleFileExtensions: ['ts', 'js', 'json', 'node'],
+    testEnvironment: 'node'
 };
 
 export default config;
