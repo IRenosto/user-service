@@ -4,10 +4,10 @@ import { AppDataSource } from '../src/database/data-source';
 import jwt from 'jsonwebtoken';
 import * as authUtils from '../src/shared/middlewares/auth';
 
-const SECRET = process.env.JWT_SECRET || 'meuSegredo';
-
 beforeAll(async () => {
     await AppDataSource.initialize();
+
+    process.env.JWT_SECRET = 'meuSegredo';
 
     jest.spyOn(authUtils, 'decoder').mockImplementation(async () => {
         return {
@@ -40,7 +40,7 @@ export const testRequest = (method: 'get' | 'post' | 'put' | 'delete' | 'patch',
             {
                 id: 1
             },
-            SECRET,
+            process.env.JWT_SECRET!,
             {
                 expiresIn: '1h'
             }
